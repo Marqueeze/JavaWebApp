@@ -29,7 +29,12 @@ public class UserDAO extends DAO<User> {
     }
 
     @Override
-    protected String getInstanceValues(User user) {
-        return "'" + user.getName() + "'" + ", " + user.getAge();
+    protected String[] getInstanceValues(User user) {
+        return new String[]{"'" + user.getName() + "'", ""+user.getAge()};
+    }
+
+    @Override
+    protected Long getId(User user) {
+        return user.getId();
     }
 }

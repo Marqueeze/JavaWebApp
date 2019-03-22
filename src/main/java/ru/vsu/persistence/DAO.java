@@ -40,8 +40,35 @@ public abstract class DAO<T> {
             String format = String.format("insert into %s (%s) VALUES (%s)",
                     tableName,
                     String.join(", ", columnNames),
-                    getInstanceValues(t));
+                    String.join(", ", getInstanceValues(t)));
             executeNonSelectQuery(format);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean update(T t){
+        try{
+            String[] values = getValuesWithColumnNames(t);
+            String query = String.format("update %s set %s where id=%d",
+                    tableName,
+                    String.join(", ", values),
+                    getId(t));
+            executeNonSelectQuery(query);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean delete(T t) {
+        try {
+            String[] values = getValuesWithColumnNames(t);
+            String query = String.format("delete from %s where %s",
+                    tableName,
+                    String.join(" and ", values));
+            executeNonSelectQuery(query);
         }catch (Exception e){
             return false;
         }
@@ -72,6 +99,18 @@ public abstract class DAO<T> {
         return null;
     }
 
+    private String[] getValuesWithColumnNames(T t){
+        String[] instanceValues = getInstanceValues(t);
+        String[] values = new String[columnNames.length];
+        for(int i = 0; i<values.length; i++){
+            values[i]=columnNames[i]+"="+instanceValues[i];
+        }
+        return values;
+    }
+
     protected abstract List<T> convertFrom(ResultSet resultSet) throws SQLException;
-    protected abstract String getInstanceValues(T t);
+    protected abstract String[] getInstanceValues(T t);
+    protected abstract Long getId(T t);
+
+
 }

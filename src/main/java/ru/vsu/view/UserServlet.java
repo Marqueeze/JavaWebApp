@@ -23,11 +23,27 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       /*                            //Add user
         User user = new User();
         user.setName("addedName");
         user.setAge(50);
 
         userService.addUser(user);
+        */
+
+       /*                          //Update user
+        User user = userService.getUserById(5L);
+        user.setName("updatedUser");
+        user.setAge(1);
+
+        userService.updateUser(user);
+        */
+
+       /*                          //Delete user
+        User user = userService.getUserById(5L);
+
+        userService.deleteUser(user);
+        */
 
         List<User> users = userService.getUsers();
         req.setAttribute("users", users);

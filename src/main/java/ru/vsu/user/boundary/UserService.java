@@ -15,6 +15,10 @@ public class UserService {
         return userDAO.findAll();
     }
 
+    public User getUserById(Long id){
+        return userDAO.findById(id);
+    }
+
     public String addUser(User user) {
         if (userDAO.save(user))
             return "Added succesfully";
@@ -22,6 +26,19 @@ public class UserService {
             return "Exception while addin user";
     }
 
+    public String updateUser(User user){
+        if (userDAO.update(user))
+            return "Added succesfully";
+        else
+            return "Exception while addin user";
+    }
+
+    public String deleteUser(User user) {
+        if (userDAO.delete(user))
+            return "Added succesfully";
+        else
+            return "Exception while addin user";
+    }
     public List<User> getMockUsers(){
         List<User> users = new ArrayList<User>();
 
